@@ -30,10 +30,9 @@ class BattlePhase {
         System.out.println("=== " + attacker.getName() + "'s Turn ===\n");
         System.out.println("Other player, please look away!\n");
 
-        attacker.displaySideBySide(defender);
-
         int row, col;
         while (true) {
+            attacker.displaySideBySide(defender);
             System.out.println("\nEnter target coordinates:");
             row = input.readInt("Row (0-9): ", 0, 9);
             col = input.readInt("Column (0-9): ", 0, 9);
@@ -42,23 +41,25 @@ class BattlePhase {
                 System.out.println("\nYou already fired at this location! Try again.");
                 input.waitForEnter("\nPress Enter to continue...");
             } else {
-                break;
+                boolean isHit = processShot(attacker, defender, row, col);
+                if (!isHit)
+                    break;
             }
         }
-
-        processShot(attacker, defender, row, col);
         input.waitForEnter("\nPress Enter to continue...");
     }
 
-    private void processShot(Player attacker, Player defender, int row, int col) {
+    private boolean processShot(Player attacker, Player defender, int row, int col) {
         if (defender.getOwnBoard().hasShipAt(row, col)) {
             System.out.println("\n💥 HIT! 💥");
             defender.getOwnBoard().setCell(row, col, Board.getHitChar());
             attacker.getTrackingBoard().setCell(row, col, Board.getHitChar());
             defender.decrementShipCells();
+            return true;
         } else {
             System.out.println("\n💦 MISS! 💦");
             attacker.getTrackingBoard().setCell(row, col, Board.getMissChar());
+            return false;
         }
     }
 }

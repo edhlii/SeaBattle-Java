@@ -17,9 +17,17 @@ public class ShipPlacementPhase {
         System.out.println("=== " + player.getName() + "'s Ship Placement ===\n");
         System.out.println("Other player, please look away!\n");
 
+        int randomPlacement = input.readInt("Random placement (1:Yes, 0:No): ", 0, 1);
+
+        if(randomPlacement==1) {
+            player.getOwnBoard().placeShipsRandomly();
+        }
+
         for (Ship template : SHIP_TEMPLATES) {
             Ship ship = new Ship(template.getName(), template.getSize());
-            placeShip(player, ship);
+            if(randomPlacement==0){
+                placeShip(player, ship);
+            }
             player.addShip(ship);
         }
 

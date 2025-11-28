@@ -1,14 +1,18 @@
+import java.util.Random;
+
 public class Board {
     private static final int GRID_SIZE = 10;
-    private static final char WATER = '~';
-    private static final char SHIP = 'S';
-    private static final char HIT = 'X';
-    private static final char MISS = 'O';
+    private static final String WATER = "🌊";
+    private static final String SHIP = "🚢";
+    private static final String HIT = "💥";
+    private static final String MISS = "🥀";
+    private Random random;
 
-    private char[][] cells;
+    private String[][] cells;
 
     public Board() {
-        cells = new char[GRID_SIZE][GRID_SIZE];
+        random = new Random();
+        cells = new String[GRID_SIZE][GRID_SIZE];
         initialize();
     }
 
@@ -20,11 +24,11 @@ public class Board {
         }
     }
 
-    public char getCell(int row, int col) {
+    public String getCell(int row, int col) {
         return cells[row][col];
     }
 
-    public void setCell(int row, int col, char value) {
+    public void setCell(int row, int col, String value) {
         cells[row][col] = value;
     }
 
@@ -57,6 +61,28 @@ public class Board {
         }
     }
 
+    public void placeShipsRandomly() {
+        // Reset board first to ensure clean slate
+        initialize();
+
+        int[] shipSizes = {5, 4, 3, 3, 2};
+
+        for (int size : shipSizes) {
+            boolean placed = false;
+            while (!placed) {
+                int row = random.nextInt(GRID_SIZE);
+                int col = random.nextInt(GRID_SIZE);
+                // Randomly pick 0 or 1, map to Horizontal or Vertical
+                char direction = random.nextBoolean() ? 'H' : 'V';
+
+                if (canPlaceShip(row, col, size, direction)) {
+                    placeShip(row, col, size, direction);
+                    placed = true;
+                }
+            }
+        }
+    }
+
     public boolean hasShipAt(int row, int col) {
         return cells[row][col] == SHIP;
     }
@@ -77,9 +103,9 @@ public class Board {
             System.out.print(i + " ");
             for (int j = 0; j < GRID_SIZE; j++) {
                 if (!showShips && cells[i][j] == SHIP) {
-                    System.out.print(WATER + " ");
+                    System.out.print(WATER);
                 } else {
-                    System.out.print(cells[i][j] + " ");
+                    System.out.print(cells[i][j]);
                 }
             }
             System.out.println();
@@ -90,11 +116,11 @@ public class Board {
         return GRID_SIZE;
     }
 
-    public static char getHitChar() {
+    public static String getHitChar() {
         return HIT;
     }
 
-    public static char getMissChar() {
+    public static String getMissChar() {
         return MISS;
     }
 }
