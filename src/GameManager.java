@@ -18,7 +18,7 @@ public class GameManager {
             if (choice == 1) {
                 startNewGame();
             } else {
-                System.out.println("\nThanks for playing Battleship!");
+                System.out.println("\nThanks for playing Sea Battle!");
                 break;
             }
         }
@@ -27,7 +27,7 @@ public class GameManager {
 
     private void startNewGame() {
         Display.clearScreen();
-        System.out.println("=== BATTLESHIP GAME SETUP ===\n");
+        System.out.println(Common.BLUE_ANSI + "=== SEABATTLE GAME SETUP ===\n" + Common.RESET_ANSI);
 
         String name1 = input.readLine("Enter Player 1 name: ");
         Player player1 = new Player(name1);

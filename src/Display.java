@@ -26,7 +26,7 @@ class Display {
 
     public static void showMainMenu() {
         clearScreen();
-        System.out.println(seaBattleAsciiArt);
+        System.out.println(Common.RED_ANSI + seaBattleAsciiArt + Common.RESET_ANSI);
         System.out.println();
         System.out.println("1. Start New Game");
         System.out.println("2. Exit");
