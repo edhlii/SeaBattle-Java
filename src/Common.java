@@ -1,6 +1,6 @@
 public final class Common {
     private Common() {
-        throw new UnsupportedOperationException("Class này không thể khởi tạo");
+        throw new UnsupportedOperationException("Can't initialize this class.");
     }
 
     public static final String RESET_ANSI = "\u001B[0m";
