@@ -34,14 +34,15 @@ class BattlePhase {
         while (true) {
             attacker.displaySideBySide(defender);
             System.out.println("\nEnter target coordinates:");
-            row = input.readInt("Row (0-9): ", 0, 9);
-            col = input.readInt("Column (0-9): ", 0, 9);
+            row = input.readInt("Row: ", 0, attacker.getOwnBoard().getGridSize() - 1);
+            col = input.readInt("Column: ", 0, attacker.getOwnBoard().getGridSize() - 1);
 
             if (attacker.getTrackingBoard().isAlreadyFired(row, col)) {
                 System.out.println("\nYou already fired at this location! Try again.");
                 input.waitForEnter("\nPress Enter to continue...");
             } else {
                 boolean isHit = processShot(attacker, defender, row, col);
+                if (defender.hasLost()) break;
                 if (!isHit)
                     break;
             }
