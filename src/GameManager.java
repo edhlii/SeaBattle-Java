@@ -3,6 +3,7 @@ public class GameManager {
     private InputHandler input;
     private ShipPlacementPhase placementPhase;
     private BattlePhase battlePhase;
+    private int gridSize;
 
     public GameManager() {
         this.input = new InputHandler();
@@ -14,6 +15,7 @@ public class GameManager {
         while (true) {
             Display.showMainMenu();
             int choice = input.readInt("Choose an option: ", 1, 2);
+            gridSize = input.readInt("Choose board size: ", 5, 20);
 
             if (choice == 1) {
                 startNewGame();
@@ -30,10 +32,10 @@ public class GameManager {
         System.out.println(Common.BLUE_ANSI + "=== SEABATTLE GAME SETUP ===\n" + Common.RESET_ANSI);
 
         String name1 = input.readLine("Enter Player 1 name: ");
-        Player player1 = new Player(name1);
+        Player player1 = new Player(name1, gridSize);
 
         String name2 = input.readLine("Enter Player 2 name: ");
-        Player player2 = new Player(name2);
+        Player player2 = new Player(name2, gridSize);
 
         placementPhase.placeShipsForPlayer(player1);
         placementPhase.placeShipsForPlayer(player2);

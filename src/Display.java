@@ -19,9 +19,11 @@ class Display {
 
 
     public static void clearScreen() {
-        for (int i = 0; i < 50; i++) {
-            System.out.println();
-        }
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+//        for (int i = 0; i < 50; i++) {
+//            System.out.println();
+//        }
     }
 
     public static void showMainMenu() {
@@ -36,7 +38,7 @@ class Display {
     public static void showWinner(String winnerName) {
         clearScreen();
         System.out.println("╔════════════════════════════════╗");
-        System.out.println("║      " + winnerName + " WINS!          ║");
+        System.out.println("║      " + winnerName + " WINS!                   ║");
         System.out.println("╚════════════════════════════════╝");
         System.out.println("\nAll enemy ships destroyed!");
     }

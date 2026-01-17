@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Board {
-    private static final int GRID_SIZE = 10;
+    private int gridSize;
     private static final String WATER = "🌊";
     private static final String SHIP = "🚢";
     private static final String HIT = "💥";
@@ -10,15 +10,16 @@ public class Board {
 
     private String[][] cells;
 
-    public Board() {
+    public Board(int gridSize) {
+        this.gridSize = gridSize;
         random = new Random();
-        cells = new String[GRID_SIZE][GRID_SIZE];
+        cells = new String[gridSize][gridSize];
         initialize();
     }
 
     private void initialize() {
-        for (int i = 0; i < GRID_SIZE; i++) {
-            for (int j = 0; j < GRID_SIZE; j++) {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
                 cells[i][j] = WATER;
             }
         }
@@ -32,14 +33,22 @@ public class Board {
         cells[row][col] = value;
     }
 
+    public int getGridSize() {
+        return gridSize;
+    }
+
+    public void setGridSize(int gridSize) {
+        this.gridSize = gridSize;
+    }
+
     public boolean canPlaceShip(int row, int col, int size, char direction) {
         if (direction == 'H') {
-            if (col + size > GRID_SIZE) return false;
+            if (col + size > gridSize) return false;
             for (int i = 0; i < size; i++) {
                 if (cells[row][col + i] != WATER) return false;
             }
         } else if (direction == 'V') {
-            if (row + size > GRID_SIZE) return false;
+            if (row + size > gridSize) return false;
             for (int i = 0; i < size; i++) {
                 if (cells[row + i][col] != WATER) return false;
             }
@@ -70,8 +79,8 @@ public class Board {
         for (int size : shipSizes) {
             boolean placed = false;
             while (!placed) {
-                int row = random.nextInt(GRID_SIZE);
-                int col = random.nextInt(GRID_SIZE);
+                int row = random.nextInt(gridSize);
+                int col = random.nextInt(gridSize);
                 // Randomly pick 0 or 1, map to Horizontal or Vertical
                 char direction = random.nextBoolean() ? 'H' : 'V';
 
@@ -94,14 +103,14 @@ public class Board {
     public void display(String title, boolean showShips) {
         System.out.println("=== " + title + " ===\n");
         System.out.print("  ");
-        for (int i = 0; i < GRID_SIZE; i++) {
+        for (int i = 0; i < gridSize; i++) {
             System.out.print(i + " ");
         }
         System.out.println();
 
-        for (int i = 0; i < GRID_SIZE; i++) {
+        for (int i = 0; i < gridSize; i++) {
             System.out.print(i + " ");
-            for (int j = 0; j < GRID_SIZE; j++) {
+            for (int j = 0; j < gridSize; j++) {
                 if (!showShips && cells[i][j] == SHIP) {
                     System.out.print(WATER);
                 } else {
@@ -112,8 +121,8 @@ public class Board {
         }
     }
 
-    public static int getBoardSize() {
-        return GRID_SIZE;
+    public int getBoardSize() {
+        return gridSize;
     }
 
     public static String getHitChar() {
